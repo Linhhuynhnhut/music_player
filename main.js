@@ -13,12 +13,48 @@ const prevBtn = $(".btn-prev");
 const randomBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 
+// Lấy đối tượng phần tử HTML
+// var textToSpeech = document.getElementById("text-to-speech");
+
+// // Gọi API TTS của Google và chuyển đổi văn bản thành giọng nói
+// function speak(text) {
+//   var audio = new Audio();
+//   audio.src =
+//     "https://translate.google.com/translate_tts?ie=UTF-8&q=" +
+//     encodeURIComponent(text) +
+//     "&tl=en&client=tw-ob";
+//   audio.play();
+// }
+
+// // Gọi hàm speak() khi người dùng nhấp vào phần tử HTML
+// textToSpeech.addEventListener("click", function () {
+//   speak(textToSpeech.textContent);
+// });
+
 const app = {
   currentIndex: 0,
   isPlaying: false,
   isRandom: false,
   isRepeat: false,
   songs: [
+    {
+      name: "Shake It Off",
+      singer: "Taylor Swift",
+      path: "./assets/audio/Taylor_Swift_-_Shake_It_Off_[NaijaGreen.Com]_.mp3",
+      image: "./assets/image/shakeitoff.jpg",
+    },
+    {
+      name: "Muộn rồi mà sao còn",
+      singer: "Sơn Tùng M-TP",
+      path: "./assets/audio/MuonRoiMaSaoCon-SonTungMTP-7011803.mp3",
+      image: "./assets/image/muonroimasaocon.png",
+    },
+    {
+      name: "Making My Way",
+      singer: "Sơn Tùng M-TP",
+      path: "./assets/audio/Making-My-Way-Son-Tung-M-TP.mp3",
+      image: "./assets/image/makingmyway.jpg",
+    },
     {
       name: "Shake It Off",
       singer: "Taylor Swift",
