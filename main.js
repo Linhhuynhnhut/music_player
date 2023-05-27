@@ -13,23 +13,51 @@ const prevBtn = $(".btn-prev");
 const randomBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 
-// Lấy đối tượng phần tử HTML
-// var textToSpeech = document.getElementById("text-to-speech");
+// const request = require("request");
 
-// // Gọi API TTS của Google và chuyển đổi văn bản thành giọng nói
-// function speak(text) {
-//   var audio = new Audio();
-//   audio.src =
-//     "https://translate.google.com/translate_tts?ie=UTF-8&q=" +
-//     encodeURIComponent(text) +
-//     "&tl=en&client=tw-ob";
-//   audio.play();
-// }
+// // pdf to text
+// const options = {
+//   method: "POST",
+//   url: "https://selectpdf.com/api2/pdftotext/",
+//   headers: {
+//     "Content-Type": "multipart/form-data; boundary=---011000010111000001101001",
+//   },
+//   formData: {
+//     key: "_put___your___license___key___here__",
+//     url: "https://selectpdf.com/demo/files/selectpdf.pdf",
+//   },
+// };
 
-// // Gọi hàm speak() khi người dùng nhấp vào phần tử HTML
-// textToSpeech.addEventListener("click", function () {
-//   speak(textToSpeech.textContent);
+// request(options, function (error, response, body) {
+//   if (error) throw new Error(error);
+
+//   console.log(body);
 // });
+
+// // text to speech
+// const axios = require("axios");
+
+// const options2 = {
+//   method: "POST",
+//   url: "https://text-to-speech53.p.rapidapi.com/",
+//   headers: {
+//     "content-type": "application/json",
+//     "X-RapidAPI-Key": "70563b477cmshdc2fb090b91d03ep11a893jsn25b27d0ee0c2",
+//     "X-RapidAPI-Host": "text-to-speech53.p.rapidapi.com",
+//   },
+//   data: {
+//     text: "お元気ですか",
+//     lang: "ja",
+//     format: "wav",
+//   },
+// };
+
+// try {
+//   const response = await axios.request(options2);
+//   console.log(response.data);
+// } catch (error) {
+//   console.error(error);
+// }
 
 const app = {
   currentIndex: 0,
@@ -174,6 +202,8 @@ const app = {
     prevBtn.onclick = function () {
       _this.preSong();
       audio.play();
+      _this.render();
+      _this.scrollToActiveSong();
     };
 
     // Khi ấn random

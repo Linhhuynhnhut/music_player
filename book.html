@@ -34,7 +34,7 @@
                         <td>Đắc nhân tâm</td>
                         <td>
                             <button type="button" class="btn btn-info">Phát</button>
-                            <button type="button" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)" >Xóa</button>
                         </td>
                     </tr>
                     <tr>
@@ -42,7 +42,7 @@
                         <td>Nhà giả kim</td>
                         <td>
                             <button type="button" class="btn btn-info">Phát</button>
-                            <button type="button" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)" >Xóa</button>
                         </td>
                     </tr>
                     <tr>
@@ -50,7 +50,7 @@
                         <td>Tuổi trẻ đáng giá bao nhiêu</td>
                         <td>
                             <button type="button" class="btn btn-info">Phát</button>
-                            <button type="button" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)" >Xóa</button>
                         </td>
                     </tr>
                     <tr>
@@ -58,7 +58,7 @@
                         <td>Đắc nhân tâm</td>
                         <td>
                             <button type="button" class="btn btn-info">Phát</button>
-                            <button type="button" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)" >Xóa</button>
                         </td>
                     </tr>
                     <tr>
@@ -66,13 +66,14 @@
                         <td>Đắc nhân tâm</td>
                         <td>
                             <button type="button" class="btn btn-info">Phát</button>
-                            <button type="button" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)" >Xóa</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="add-btn-container">
-                <button type="button" class="btn btn-primary">Thêm</button>
+                <input type="file" id="file-input" class="form-control-file">
+                <button type="button" class="btn btn-primary" onclick="handleClickAdd()">Thêm</button>
             </div>
             
             <button type="button" class="btn btn-secondary back-home-btn">
@@ -81,5 +82,37 @@
             
         </div>
     </div>
+    <script>
+        const handleClickAdd = () => {
+            //1. Lấy file từ input
+            const file = document.querySelector("#file-input").files[0];
+            console.log(file)
+
+            //2. Đưa file lên CSDL
+            
+
+            //3. Thêm vào UI
+            const newNode = document.createElement("tr");
+            newNode.innerHTML = `<th scope="row">5</th>
+                        <td>${file.name}</td>
+                        <td>
+                            <button type="button" class="btn btn-info">Phát</button>
+                            <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)">Xóa</button>
+                        </td>`;
+            const tableEl = document.querySelector("table");
+            tableEl.appendChild(newNode);
+        }
+
+        const handleClickDelete = (e) => {
+            //1. Xóa trên UI
+            console.log("button>>>", e);
+            // const btnEl = this;
+            const trEl = e.parentNode.parentNode;
+            console.log("trEl>>>", trEl)
+            trEl.remove();
+
+            //2. Xóa trên CSDL
+        }
+    </script>
 </body>
 </html>
