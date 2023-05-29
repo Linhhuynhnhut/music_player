@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
     integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
     crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.6.172/pdf.min.js"
+        integrity="sha512-KEoL9wKXt/fhlAfN+ZNXf3pI48aaQE9Qd5fihHY+5n5XLTSnyGJ0uKgUj//V6KAcjFwzAbCYYPKeGlFES/H5Ng=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -65,7 +68,7 @@
                         <th scope="row">5</th>
                         <td>Đắc nhân tâm</td>
                         <td>
-                            <button type="button" class="btn btn-info">Phát</button>
+                            <button type="button" class="btn btn-info" onclick="handleClickPlay(this)">Phát</button>
                             <button type="button" class="btn btn-danger" onclick="handleClickDelete(this)" >Xóa</button>
                         </td>
                     </tr>
@@ -79,15 +82,87 @@
             <button type="button" class="btn btn-secondary back-home-btn">
                 <a class="" href="./index.html">Home</a>
             </button>
+            <audio controls>
+                <source src="" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
             
         </div>
     </div>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
     <script>
+        // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+        // pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.6.172/pdf.worker.min.js";
+
+        // let alltext = []; // Array to store all extracted text
+        // let pwd = ""
+        //     // Asynchronous function to extract text from the PDF
+        // async function extractText(url) {
+        //     try {
+        //         let pdf;
+                
+        //         pdf = await pdfjsLib.getDocument(url).promise; // Get the PDF document without password
+                
+        //         let pages = pdf.numPages; // Get the total number of pages in the PDF
+        //         for (let i = 1; i <= pages; i++) {
+        //             let page = await pdf.getPage(i); // Get the page object for each page
+        //             let txt = await page.getTextContent(); // Get the text content of the page
+        //             let text = txt.items.map((s) => s.str).join(""); // Concatenate the text items into a single string
+        //             console.log(text);
+        //         }
+                
+        //         //afterProcess(); // Display the result section
+        //     } catch (err) {
+        //         alert(err.message);
+        //     }
+        // }
+
+
+        // Function to handle the post-processing after text extraction
+        // function afterProcess() {
+        //     pdftext.value = alltext[select.value - 1]; // Display the extracted text for the selected page
+        //     download.href = "data:text/plain;charset=utf-8," + encodeURIComponent(alltext[select.value - 1]); // Set the download link URL for the extracted text
+        //     afterupload.style.display = "flex"; // Display the result section
+        //     document.querySelector(".another").style.display = "unset"; // Display the "Extract Another PDF" button
+        // }
+        // function extractText(pdfUrl) {
+        //     var pdf = pdfjsLib.getDocument(pdfUrl);
+        //     return pdf.promise.then(function (pdf) {
+        //         var totalPageCount = pdf.numPages;
+        //         var countPromises = [];
+        //         for (
+        //             var currentPage = 1;
+        //             currentPage <= totalPageCount;
+        //             currentPage++
+        //         ) {
+        //             var page = pdf.getPage(currentPage);
+        //             countPromises.push(
+        //                 page.then(function (page) {
+        //                     var textContent = page.getTextContent();
+        //                     return textContent.then(function (text) {
+        //                         return text.items
+        //                             .map(function (s) {
+        //                                 return s.str;
+        //                             })
+        //                             .join('');
+        //                     });
+        //                 }),
+        //             );
+        //         }
+
+        //         return Promise.all(countPromises).then(function (texts) {
+        //             return texts.join('');
+        //         });
+        //     });
+        // }
+
+        let temp;
         const handleClickAdd = () => {
             //1. Lấy file từ input
             const file = document.querySelector("#file-input").files[0];
-            console.log(file)
-
+            temp = file;
+             readFile(file); 
             //2. Đưa file lên CSDL
             
 
@@ -101,6 +176,8 @@
                         </td>`;
             const tableEl = document.querySelector("table");
             tableEl.appendChild(newNode);
+
+            
         }
 
         const handleClickDelete = (e) => {
@@ -113,6 +190,92 @@
 
             //2. Xóa trên CSDL
         }
+    
+        async function loadFile(file) {
+            let text = await file.text();
+            console.log(text);
+        }
+
+        const handleClickPlay = async (e) => {
+            //1. Call API pdf to text
+            console.log(contentNow);
+            // const url =
+            //     'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
+
+            // extractText(url).then(
+            //     function (text) {
+            //         console.log('parse ' + text);
+            //     },
+            //     function (reason) {
+            //         console.error(reason);
+            //     },
+            // );
+            
+            
+            //Giả sử là chuỗi này
+            
+            
+            
+            //2. Call API text-to-speech
+            let result = await callAPITextToSpeech(contentNow);
+            let audioLink = JSON.parse(result).speech
+            // console.log("result >>>", JSON.parse(result))
+            console.log("audio link>>>", audioLink)
+
+            //3. Lấy link truyền vào thẻ audio
+            const audioEl = document.querySelector("audio");
+            const innerHTMl = `<source src="${audioLink}" type="audio/wav">
+                Your browser does not support the audio element.`
+            audioEl.innerHTML = innerHTMl;
+            audioEl.play();
+
+        }
+        let contentNow = "";
+        function readFile(file) {
+                var reader = new FileReader();
+
+                reader.onload = function (event) {
+                    var contents = event.target.result;
+                    //console.log(contents);
+                    contentNow = contents;
+                };
+
+                reader.onerror = function (event) {
+                    console.error("File could not be read! Error code: " + event.target.error.code);
+                };
+
+                reader.readAsText(file);
+            }
+
+        const callAPITextToSpeech = async (text) => {
+            const url = "https://text-to-speech53.p.rapidapi.com/";
+            const body = {
+                text: text,
+                lang: "ja",
+                format: "wav",
+            }
+            const options = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "X-RapidAPI-Key": "70563b477cmshdc2fb090b91d03ep11a893jsn25b27d0ee0c2",
+                    "X-RapidAPI-Host": "text-to-speech53.p.rapidapi.com",
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: JSON.stringify(body),
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.text();
+                // console.log("response>>>", response.text());
+                console.log(result);
+                return result;
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
     </script>
 </body>
 </html>
